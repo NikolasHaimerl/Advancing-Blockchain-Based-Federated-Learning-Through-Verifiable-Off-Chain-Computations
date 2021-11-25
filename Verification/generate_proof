@@ -1,0 +1,16 @@
+#!/bin/bash
+array_one=( "1" "1" )
+array_two=( "array two part one" "array two part two" )
+export PATH=$PATH:/home/nikolas/.zokrates/bin
+# compile
+zokrates compile -i ZoKrates/root.zok
+# perform the setup phase
+zokrates setup
+# execute the program
+zokrates compute-witness -a 1 1 1 1 1
+# generate a proof of computation
+zokrates generate-proof
+# export a solidity verifier
+zokrates export-verifier
+# or verify natively
+zokrates verify

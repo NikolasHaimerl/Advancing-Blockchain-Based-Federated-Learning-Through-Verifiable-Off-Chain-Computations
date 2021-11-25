@@ -1,0 +1,53 @@
+DEFAULT:
+  DeviceDataPath: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Devices/Edge_Device/data"
+  IntervalDataGenerator: 1
+  NumberOfSamplesGenerated: 50
+  MessageBrokerHost: "localhost"
+  QueueBase: "Queue"
+  InputDimension: 9
+  OutputDimension: 6
+  NumberOfParticipants: 6
+  Epochs : 1
+  LearningRate: 1000
+  Precision: 10000
+  WaitingTime: 2
+  BatchSize: 40
+  Rounds : 300
+  TestFilePath: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Devices/Edge_Device/data/test_file.txt"
+  TrainFilePath: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Devices/Edge_Device/data/"
+  IntervalTime: 40
+  PercentOfDataGenerated: 0.0086
+  PerformProof: False
+  Gas: 100000000000000
+
+  ResponseVariable: "Activity"
+  EtheriumRPCServer: "http://127.0.0.1:8545"
+  FLContractAddress: "0xDA4c7181CA349fEA6287F5fd51817F1385302F0e"
+  VerifierContractAddress: "0x7ABc6100AFC090bA88483266344fD82cA3cdB69f"
+  ZokratesPath: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Verification/ZoKrates/root.zok"
+  VerificationBase: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Verification/SAVED_VERIFYER_10/"
+  FLContractABIPAth: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Blockchain/Truffle/build/contracts/FederatedModel.json"
+  AnalyticsOutBase: "/home/nikolas/MEGA/Workplace/Informatik/Masterarbeit/Implementation/PythonProject/MasterThesis_SoftwareEngineering/Devices/MiddleWare/Analytics/"
+  Activities : [5, 11, 12, 14, 15, 17]
+  ActivitiesEncoded : [1,2,3,4,5,6]
+  ActivityMappings:
+    2: 1
+    3: 1
+    4: 1
+    16: 15
+    6: 5
+    10: 11
+    13: 14
+    7: 1
+  ActivityEncoding:
+    5: 1
+    11: 2
+    12: 3
+    14: 4
+    15: 5
+    17: 6
+
+
+
+
+
