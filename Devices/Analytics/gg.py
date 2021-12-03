@@ -300,6 +300,7 @@ for participant in data.keys():
     df.plot(kind='box',showmeans=True)
     plt.ylabel("Time-Taken [Seconds]")
     plt.savefig('roundProof_Time.pgf')
+    plt.show()
 
 
 for participant in data.keys():
@@ -319,11 +320,11 @@ for participant in data.keys():
     plt.legend(list(batches.keys()))
     plt.ylabel("Time-Taken [Seconds]")
     plt.savefig('round_training_local.pgf')
+    plt.show()
 
 for j in range(0, len(data.keys())):
     participant = list((data.keys()))[j]
     batches=data[participant]
-    plt.figure(figsize=(15,10))
     dict={}
     plt.rc('pgf', texsystem='pdflatex')
     df=pd.DataFrame(dict.items(),columns=dict.keys())
@@ -337,6 +338,8 @@ for j in range(0, len(data.keys())):
     for i in range(0,len(df.columns)):
         d=df[df.columns[i]]
         d.plot(marker=markers[i],linewidth=0.5,markevery=10)
+    plt.legend(df.columns)
+    plt.xlabel("Round Number")
     plt.ylabel("Accuracy Score")
     plt.savefig('roundScore.pgf')
     plt.show()
@@ -362,16 +365,38 @@ for participant in data.keys():
         if bool(batch):
             g=calc_devices_mean(batch,"Round_Classification_Report", ["1", "2", "3", "4", "5", "6"])
             dict[b]=g
-
-    for key in dict.keys():
+    fig, axs = plt.subplots(2, 2,sharex=True, sharey=True,figsize=(8,5))
+    ls=[]
+    for j in range(0,len(dict.keys())):
+        key=list(dict.keys())[j]
         k=dict[key]
+        x,y=(None,None)
+        if j==0:
+            x,y=(0,0)
+        if j==1:
+            x=0
+            y=1
+        if j==2:
+            x=1
+            y=0
+        if j==3:
+            x=1
+            y=1
+        l=None
         for i in range(0, len(["1", "2", "3", "4", "5", "6"])):
-            plt.plot(range(1,len(dict[key])+1), k[str(i + 1)], marker=markers[i],linewidth=0.5,markevery=10)
-        plt.ylabel("Accuracy Score")
-        plt.xlabel("Round Number")
-        plt.legend(["Walking Stairs", "Walking", "Running", "Elliptical Trainer", "Cycling", "Rowing"])
-        plt.savefig(f'roundScoreClasses_{key}.pgf')
-        plt.show()
+            ls.append(axs[x][y].plot(range(1,len(dict[key])+1), k[str(i + 1)], marker=markers[i],linewidth=0.5,markevery=50)[0])
+        axs[x][y].title.set_text(key)
+       # plt.ylabel("Accuracy Score")
+       # plt.xlabel("Round Number")
+        #plt.legend(ls,,loc="upper right")
+    plt.subplots_adjust(wspace=0, hspace=0.2)
+    axs[0][0].set_ylabel("Accuracy Score")
+    axs[1][0].set_ylabel("Accuracy Score")
+    axs[1][0].set_xlabel("Round Number")
+    axs[1][1].set_xlabel("Round Number")
+    fig.legend(ls, ["Walking Stairs", "Walking", "Running", "Elliptical Trainer", "Cycling", "Rowing"], loc='upper center',ncol=6)
+    fig.savefig(f'roundScoreClasses.pgf')
+    plt.show()
 
 batchsizes=[10,20,30,40]
 participants=range(2,9,2)
@@ -420,12 +445,13 @@ for j in range(0,len(dict.keys())):
     key=list((dict.keys()))[j]
     k=dict[key]
     if len(k.columns)>1:
-        plt.plot(range(1,len(dict[key])+1),k,marker=markers[i],linewidth=0.5,markevery=10)
+        plt.plot(range(1,len(dict[key])+1),k,linewidth=0.5,markevery=10)
         plt.ylabel("Accuracy Score")
         plt.xlabel("Round Number")
         plt.legend(k.columns)
         plt.savefig(f'participantsVSBatchsize_{key}.pgf')
         plt.show()
+
 
 dict = {}
 for participant in data.keys():
@@ -441,12 +467,37 @@ for participant in data.keys():
                 dict[b] = df
             else:
                 dict[b][participant + " | " + b] = g
-for j in range(0,len(dict.keys())):
-    key=list((dict.keys()))[j]
-    k=dict[key]
-    plt.plot(range(1,len(dict[key])+1),k,marker=markers[i],linewidth=0.5,markevery=10)
-    plt.ylabel("Accuracy Score")
-    plt.xlabel("Round Number")
-    plt.legend(k.columns)
-    plt.savefig(f'participants_in_sameBatchsize_{key}.pgf')
-    plt.show()
+fig, axs = plt.subplots(2, 2, sharex=True, sharey=True, figsize=(8, 5))
+ls = []
+
+for j in range(0, len(dict.keys())):
+    key = list(dict.keys())[j]
+    k = dict[key]
+    x, y = (None, None)
+    if j == 0:
+        x, y = (0, 0)
+    if j == 1:
+        x = 0
+
+        y = 1
+    if j == 2:
+        x = 1
+        y = 0
+    if j == 3:
+        x = 1
+        y = 1
+    ls.append(axs[x][y].plot(range(1, len(dict[key]) + 1), k, linewidth=0.5, markevery=10)[0])
+    axs[x][y].title.set_text(key)
+    axs[x][y].legend(k.columns)
+
+# plt.ylabel("Accuracy Score")
+# plt.xlabel("Round Number")
+# plt.legend(ls,,loc="upper right")
+plt.subplots_adjust(wspace=0, hspace=0.2)
+axs[0][0].set_ylabel("Accuracy Score")
+axs[1][0].set_ylabel("Accuracy Score")
+axs[1][0].set_xlabel("Round Number")
+axs[1][1].set_xlabel("Round Number")
+fig.savefig(f'participants_in_sameBatchsize.pgf')
+plt.show()
+
